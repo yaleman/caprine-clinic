@@ -31,11 +31,13 @@ Run `npm version <version> --no-git-tag-version`, then update `[launcher]` and `
 
 ## GitHub automation
 
-The workflow builds on pushes to `main`, pull requests targeting main and manual dispatch. It uses immutable action SHAs, `contents: read`, disabled checkout credential persistence and no registry credentials. It uploads the archive and checksum in a commit-specific `caprine_clinic-v<version>-<sha>` artifact. No live Splunk instance, credentials, Docker or synthetic searches run in hosted CI.
+The workflow checks and packages pushes to `main`, pull requests targeting main and manual dispatch. The build job uses `contents: read`, immutable action SHAs and disabled checkout credential persistence. It retains a commit-specific archive/checksum artifact. Hosted CI runs no live Splunk instance or searches.
 
-Unlike the reference's release publisher, this workflow does not force-push tags, refresh GitHub Releases or grant contents-write permission. Automatic public release publication needs separately authorized write permissions and repository setup. No GitHub repository or remote has been created and nothing has been pushed; the workflow becomes active only after the source is placed in a GitHub repository with Actions enabled.
+Successful main builds also publish a GitHub Release using `package.json`'s version: version `0.1.0` produces tag/release `v0.1.0` with `caprine_clinic-0.1.0.tar.gz` and its `.sha256`. There is no `latest` tag or release. The separate publication job has `contents: write` only on main push/manual runs; pull requests and manual runs from other branches cannot publish. It downloads the checked build and verifies its checksum before uploading.
 
-Official action references: [setup-node](https://github.com/actions/setup-node), [upload-artifact](https://github.com/actions/upload-artifact).
+Publication is rolling within a version: subsequent successful main builds with the same version move that version tag to the built commit and replace the archive/checksum assets (`--clobber`). Previous versions remain available when the package version is bumped. This follows the local reference's mutable version-release convention; consumers needing an immutable source revision should pin the commit SHA. Superseded queued main builds skip publication, and publication jobs are serialized. A version bump requires updating package.json, package-lock.json and both app.conf versions together as described above. No manually pushed tag is required and tag pushes do not trigger this workflow.
+
+Official references: [release creation](https://cli.github.com/manual/gh_release_create), [asset replacement](https://cli.github.com/manual/gh_release_upload), [release editing](https://cli.github.com/manual/gh_release_edit), [setup-node](https://github.com/actions/setup-node), [upload-artifact](https://github.com/actions/upload-artifact), [download-artifact](https://github.com/actions/download-artifact).
 
 ## Verification performed
 

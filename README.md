@@ -13,7 +13,7 @@ See [current runtime verification and limitations](docs/runtime.md).
 
 Use Node **26.10.0** (`.node-version`) and Python 3.9+. Run `npm ci --no-audit --no-fund`, then `npm run check`. The installable package is `dist/caprine_clinic-0.1.0.tar.gz`, with a SHA-256 checksum beside it. `caprine-clinic.spl` remains an identical local Compose alias. Generated packages, credentials, fixture data and runtime artifacts are ignored by Git.
 
-The read-only GitHub workflow builds on `main`, pull requests and manual runs, validates reproducibility and uploads the versioned package/checksum. It does not push tags or publish releases. See [packaging conventions and validation](docs/packaging.md) for version bumps and remote setup.
+The GitHub workflow validates reproducibility and uploads the package/checksum. Successful main builds publish to the `v<package.json version>` GitHub Release, updating that version’s tag and assets on subsequent builds. Pull requests only build and validate. See [packaging conventions and validation](docs/packaging.md) for version bumps and remote setup.
 
 ## Read the design
 
@@ -41,4 +41,4 @@ Use React 18 and Splunk UI inside Splunk Web. The general `@splunk/react-ui` lib
 - [Search Job Inspector](https://help.splunk.com/en/?resourceId=Splunk_Search_ViewsearchjobpropertieswiththeJobInspector)
 - [Create a Splunk app](https://dev.splunk.com/enterprise/docs/developapps/createapps)
 
-The local target runs the pinned linux/amd64 image under emulation on the ARM64 Mac. This establishes local functional compatibility; timings do not represent native or production performance. No Git repository, commits, push or external publishing were created.
+The local target runs the pinned linux/amd64 image under emulation on the ARM64 Mac. This establishes local functional compatibility; timings do not represent native or production performance. Source and packaging automation are maintained in the Git repository.
