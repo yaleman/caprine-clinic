@@ -2,6 +2,8 @@
 
 Search diagnostics for the herd. Run Splunk searches side by side, compare their performance, and see where their results differ—all inside Splunk Web.
 
+![Caprine Clinic in Splunk Web, showing two completed searches and their performance comparison](docs/images/caprine-clinic.jpg)
+
 ## Install and open
 
 Download the app archive from [GitHub Releases](https://github.com/yaleman/caprine-clinic/releases), then install it using **Apps → Manage Apps → Install app from file** in Splunk Web. Open **Caprine Clinic → Compare searches** from the Apps menu. You need permission to install apps, or an administrator to install it for you; searches use your signed-in Splunk account and its permissions.

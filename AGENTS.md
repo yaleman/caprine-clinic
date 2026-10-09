@@ -16,7 +16,7 @@ Caprine Clinic is a React app embedded in Splunk Web for concurrent search compa
 - Splunk governs search permissions, time ranges, concurrency and runtime. Do not add app execution limits, command allowlists or automatic job cancellation on page close.
 - Resolve relative historical ranges with one server anchor per launch. Preserve All Time/open endpoints and real-time semantics. Inline SPL bounds/macros can override comparison assumptions.
 - Local live validation uses only authorized synthetic searches on the existing Clinic container. Preserve data and user drafts; do not change other Splunk apps. Do not connect to another live instance or run user searches without authorization.
-- Keep credentials, local instance state, generated fixtures, screenshots, caches and build artifacts ignored. Never print credentials or put them in command arguments, source, docs or release assets.
+- Keep credentials, local instance state, generated fixtures, test screenshots, caches and build artifacts ignored. Curated documentation screenshots in docs/images/ are intentionally tracked; inspect them for private data before publication. Never print credentials or put them in command arguments, source, docs or release assets.
 - Publishing, pushing, repository creation or expanded CI permissions require explicit authorization. The user authorized versioned main-build publication to yaleman/caprine-clinic; only the publication job grants contents-write permission.
 
 ## Build and checks
