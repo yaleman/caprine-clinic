@@ -1,0 +1,20 @@
+[tools]
+python = "3.13"
+uv = "latest"
+
+[tasks.check]
+depends = ["ruff", "ty", "pytest"]
+
+[tasks.fmt]
+run = "uv run ruff format "
+
+[tasks.ty]
+depends = ["fmt"]
+run = "uv run ty check"
+
+[tasks.ruff]
+depends = ["fmt"]
+run = "uv run ruff check"
+
+[tasks.pytest]
+run = "uv run pytest"
