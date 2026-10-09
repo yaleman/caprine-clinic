@@ -33,6 +33,7 @@ class PackageTests(unittest.TestCase):
             files = {
                 "default/app.conf": "[id]\nname=caprine_clinic\nversion=0.1.0\n[package]\nid=caprine_clinic\n[launcher]\nversion=0.1.0\n",
                 "metadata/default.meta": "",
+                "static/appIcon.png": "icon asset",
                 "default/data/ui/nav/default.xml": "<nav/>",
                 "default/data/ui/views/clinic.xml": "<view/>",
             }

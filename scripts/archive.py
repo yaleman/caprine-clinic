@@ -76,7 +76,7 @@ def validate(path, app_id, version):
                 entry.isfile() or entry.isdir()
             ):
                 raise ValueError("Forbidden archive entry")
-            if len(parts) > 1 and parts[1] not in {"default", "metadata", "appserver"}:
+            if len(parts) > 1 and parts[1] not in {"default", "metadata", "appserver", "static"}:
                 raise ValueError("Unexpected packaged directory")
             if entry.name in names:
                 raise ValueError("Duplicate archive entry")

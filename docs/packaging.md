@@ -14,7 +14,7 @@ npm run check
 npm run package:metadata
 ```
 
-`npm run check` runs model and packaging/fixture tests, TypeScript and the production build. The validator rejects path traversal, wrong roots, symlinks, duplicate entries, local configuration/secrets/dependency/cache directories, missing app files, inconsistent identity/version and broken asset fingerprints. The main archive contains only `caprine_clinic/default`, `metadata` and `appserver`. It does not contain test fixture apps, fixture data, credentials or screenshots. This validation is not AppInspect or Cloud certification.
+`npm run check` runs model and packaging/fixture tests, TypeScript and the production build. The validator rejects path traversal, wrong roots, symlinks, duplicate entries, local configuration/secrets/dependency/cache directories, missing app files, inconsistent identity/version and broken asset fingerprints. The main archive contains only `caprine_clinic/default`, `metadata`, `appserver` and `static` (app icons). It does not contain test fixture apps, fixture data, credentials or screenshots. This validation is not AppInspect or Cloud certification.
 
 Outputs:
 

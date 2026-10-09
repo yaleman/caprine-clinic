@@ -156,7 +156,7 @@ class PinnedConnection(http.client.HTTPSConnection):
 class PinnedHandler(urllib.request.HTTPSHandler):
     def https_open(self, req):
         return self.do_open(
-            PinnedConnection, req, context=self._context, check_hostname=False
+            PinnedConnection, req, context=self._context
         )
 
 
