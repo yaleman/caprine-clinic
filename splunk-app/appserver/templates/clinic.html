@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Caprine Clinic | Splunk</title>
+  <link rel="stylesheet" href="${make_url('/static/app/caprine_clinic/clinic.css')}" />
+</head>
+<body>
+  <script src="${make_url('/config?autoload=1')}" crossorigin="use-credentials"></script>
+  <script src="${make_url('/static/js/i18n.js')}"></script>
+  <script src="${make_url('/i18ncatalog?autoload=1')}"></script>
+  <script>__splunkd_partials__ = ${json_decode(splunkd)};</script>
+  <div id="clinic-root"></div>
+  <script src="${make_url('/static/app/caprine_clinic/clinic.js')}"></script>
+</body>
+</html>

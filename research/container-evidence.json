@@ -1,0 +1,81 @@
+{
+  "retrieved_utc": "2026-10-08T21:52:58.803492+00:00",
+  "repository": "splunk/splunk",
+  "tags": [
+    {
+      "tag": "10.4.0",
+      "url": "https://hub.docker.com/v2/repositories/splunk/splunk/tags/10.4.0",
+      "digest": "sha256:5fef7b0d2c83f6e8b3fe3cda5885e2a01e3a6eb99d8502e6333aaa64e7021f62",
+      "last_updated": "2026-05-18T23:39:38.858401Z",
+      "images": [
+        {
+          "architecture": "amd64",
+          "os": "linux",
+          "variant": null,
+          "digest": "sha256:c9829cb518d986e7b057ecda2af886d8a8b6931a0593c5f1c7f37bb0654002bc",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "tag": "10.4.3",
+      "url": "https://hub.docker.com/v2/repositories/splunk/splunk/tags/10.4.3",
+      "digest": "sha256:cc3a3efe2509fa31f67d4aa20dde7118886babf9a0930f197ef996d513c44834",
+      "last_updated": "2026-09-01T22:45:25.34223Z",
+      "images": [
+        {
+          "architecture": "amd64",
+          "os": "linux",
+          "variant": null,
+          "digest": "sha256:bae5aafdea83c20a025b33f2653166c36858f3c2b47c60b087019ac6b4671356",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "tag": "10.4.4",
+      "url": "https://hub.docker.com/v2/repositories/splunk/splunk/tags/10.4.4",
+      "digest": "sha256:4f18abfb106b29dc6af68868fb2e5c5ae68aa8e9ac6bfb28b7bec12ede2079aa",
+      "last_updated": "2026-10-01T23:07:51.080324Z",
+      "images": [
+        {
+          "architecture": "amd64",
+          "os": "linux",
+          "variant": null,
+          "digest": "sha256:000b0368e668359aee1fd32292baefba9404c2e900a14c170f3859cd88a686c9",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "tag": "10.4",
+      "url": "https://hub.docker.com/v2/repositories/splunk/splunk/tags/10.4",
+      "digest": "sha256:4f18abfb106b29dc6af68868fb2e5c5ae68aa8e9ac6bfb28b7bec12ede2079aa",
+      "last_updated": "2026-10-01T23:13:15.748723Z",
+      "images": [
+        {
+          "architecture": "amd64",
+          "os": "linux",
+          "variant": null,
+          "digest": "sha256:000b0368e668359aee1fd32292baefba9404c2e900a14c170f3859cd88a686c9",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "tag": "10.4.4-rhel9",
+      "url": "https://hub.docker.com/v2/repositories/splunk/splunk/tags/10.4.4-rhel9",
+      "digest": "sha256:40ac14c1ce007d9e0950530e1f493a9daacaea0d24b0ce6f148e31efc039b2e5",
+      "last_updated": "2026-10-06T19:17:25.38822Z",
+      "images": [
+        {
+          "architecture": "amd64",
+          "os": "linux",
+          "variant": null,
+          "digest": "sha256:e0f4c4c1373461108c7c58ebb511507af1dce77bf2d13bfce0dee2c30f6d1cbf",
+          "status": "active"
+        }
+      ]
+    }
+  ]
+}

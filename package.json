@@ -1,0 +1,37 @@
+{
+  "name": "caprine-clinic",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "test": "node --import tsx --test tests/*.test.ts && python3 -m unittest discover -s tests -p \"test_*.py\"",
+    "check": "npm test && npm run build",
+    "package:metadata": "node scripts/release_metadata.mjs"
+  },
+  "dependencies": {
+    "@splunk/react-page": "8.3.2",
+    "@splunk/react-search": "8.0.0",
+    "@splunk/react-time-range": "12.1.1",
+    "@splunk/react-ui": "5.17.0",
+    "@splunk/splunk-utils": "4.1.0",
+    "@splunk/themes": "1.9.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-is": "18.3.1",
+    "styled-components": "5.3.11"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.28",
+    "@types/react-dom": "18.3.7",
+    "@types/styled-components": "5.1.36",
+    "esbuild": "0.25.12",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
+  },
+  "splunk": {
+    "appId": "caprine_clinic"
+  }
+}

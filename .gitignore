@@ -1,0 +1,15 @@
+node_modules/
+output/
+dist/
+caprine-clinic.spl
+.env
+.local/
+.playwright-cli/
+.DS_Store
+__pycache__/
+*.tar.gz
+*.tgz
+*.sha256
+tests/fixtures/*.json
+tests/fixtures/*.jsonl
+research/runtime-*.json

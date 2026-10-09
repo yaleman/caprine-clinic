@@ -1,0 +1,191 @@
+{
+  "retrieved_utc": "2026-10-08T21:40:32.314394+00:00",
+  "packages": [
+    {
+      "name": "@splunk/react-search",
+      "version": "8.0.0",
+      "author": {
+        "name": "Splunk Inc."
+      },
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=22"
+      },
+      "peerDependencies": {
+        "react": "^16 || ^17 || ^18",
+        "react-is": "^16 || ^17 || ^18",
+        "react-dom": "^16 || ^17 || ^18",
+        "@types/react": "^16 || ^17 || ^18",
+        "styled-components": "^5.3.10"
+      },
+      "dependencies": {
+        "lodash": "^4.18.1",
+        "ace-builds": "^1.44.0",
+        "@splunk/moment": "^0.7.0",
+        "@splunk/themes": "^1.9.0",
+        "@splunk/react-ui": "^5.12.0",
+        "@splunk/ui-utils": "^1.14.0",
+        "@splunk/react-icons": "^5.13.0",
+        "@splunk/splunk-utils": "^4.0.0",
+        "@splunk/react-time-range": "^12.1.1",
+        "@splunk/time-range-utils": "^3.4.1"
+      },
+      "metadata_url": "https://registry.npmjs.org/@splunk/react-search/8.0.0",
+      "tarball": "https://registry.npmjs.org/@splunk/react-search/-/react-search-8.0.0.tgz",
+      "integrity": "sha512-9iET8c36IRelKNkmZV4nxlCQi7JUTExVCAa04n+M/86VLkMZzSZVvpKRJNbzxBdqTDaNqRrhZMoTYKsUHKp3bg=="
+    },
+    {
+      "name": "@splunk/search-job",
+      "version": "3.1.0",
+      "author": {
+        "name": "Splunk Inc."
+      },
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": null,
+      "dependencies": {
+        "rxjs": "^5.4.2",
+        "lodash": "^4.17.14",
+        "@splunk/splunk-utils": "^3.1.0"
+      },
+      "metadata_url": "https://registry.npmjs.org/@splunk/search-job/3.1.0",
+      "tarball": "https://registry.npmjs.org/@splunk/search-job/-/search-job-3.1.0.tgz",
+      "integrity": "sha512-L2AXkZGimqdBN9A1sENWGVAD8/yzB5RNpg8ZgfBW4JCJlMKdNrAXyu69xtsvjrRuYp/gTd//65x/6AljUr4HDA=="
+    },
+    {
+      "name": "@splunk/react-ui",
+      "version": "5.17.0",
+      "author": {
+        "name": "Splunk Inc."
+      },
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "styled-components": "^5.3.10"
+      },
+      "dependencies": {
+        "diff": "^8.0.4",
+        "lodash": "^4.18.1",
+        "moment": "^2.29.4",
+        "colorjs.io": "^0.6.1",
+        "prop-types": "^15.8.0",
+        "remark-gfm": "^1.0.0",
+        "@dnd-kit/core": "^6.1.0",
+        "@splunk/themes": "^1.13.0",
+        "intl-tel-input": "^25.3.2",
+        "react-markdown": "^8.0.7",
+        "@splunk/ui-utils": "^1.14.1",
+        "decimal.js-light": "^2.5.1",
+        "@dnd-kit/sortable": "^8.0.0",
+        "@react-spring/web": "^9.7.5",
+        "@dnd-kit/modifiers": "^7.0.0",
+        "@dnd-kit/utilities": "^3.2.2",
+        "@splunk/react-icons": "^5.16.0",
+        "use-sync-external-store": "^1.6.0",
+        "use-typed-event-listener": "^3.0.0"
+      },
+      "metadata_url": "https://registry.npmjs.org/@splunk/react-ui/5.17.0",
+      "tarball": "https://registry.npmjs.org/@splunk/react-ui/-/react-ui-5.17.0.tgz",
+      "integrity": "sha512-+ndMQZ70OOehL97YLCPORYofvO6+4vrkFhXxfEilp9qkHzlKy0ZZqhKxNBQh4EmsVgwA/UnepuAyZY0MsRF0ew=="
+    },
+    {
+      "name": "@splunk/react-time-range",
+      "version": "12.1.1",
+      "author": {
+        "name": "Splunk Inc."
+      },
+      "license": "Apache-2.0",
+      "engines": null,
+      "peerDependencies": {
+        "react": "^16.12.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.12.0 || ^17.0.0 || ^18.0.0",
+        "@splunk/moment": "^0.7.0",
+        "@splunk/themes": "^1.8.0",
+        "@splunk/react-ui": "^5.11.1",
+        "@splunk/ui-utils": "^1.14.0",
+        "styled-components": "^5.3.10",
+        "@splunk/splunk-utils": "^4.0.0",
+        "@splunk/time-range-utils": "^3.3.0"
+      },
+      "dependencies": {
+        "lodash": "^4.18.1",
+        "prop-types": "^15.6.0",
+        "@babel/runtime": "^7.27.6"
+      },
+      "metadata_url": "https://registry.npmjs.org/@splunk/react-time-range/12.1.1",
+      "tarball": "https://registry.npmjs.org/@splunk/react-time-range/-/react-time-range-12.1.1.tgz",
+      "integrity": "sha512-fyJ+4jXpYq0mk6GajZ90e12jI91y0wNXcr00fpSW9yC6b+xh3CFrBmDhoPcj4xADhy4c00l5INvndMtzPGGFXA=="
+    },
+    {
+      "name": "@splunk/splunk-utils",
+      "version": "4.1.0",
+      "author": {
+        "name": "Splunk Inc."
+      },
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=20"
+      },
+      "peerDependencies": null,
+      "dependencies": {
+        "lodash": "^4.18.1",
+        "scriptjs": "^2.5.8",
+        "@splunk/ui-utils": "^1.14.1"
+      },
+      "metadata_url": "https://registry.npmjs.org/@splunk/splunk-utils/4.1.0",
+      "tarball": "https://registry.npmjs.org/@splunk/splunk-utils/-/splunk-utils-4.1.0.tgz",
+      "integrity": "sha512-BnLyAJGrBvOySwmGbb0xT5O0ivh/e4Lbi3cPV52u+kexcCD/a6FbZywqIi/gvpB258SwATrrWISH7kIWL4kOgA=="
+    },
+    {
+      "name": "@splunk/create",
+      "version": "11.2.1",
+      "author": {
+        "name": "Splunk Inc."
+      },
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=22"
+      },
+      "peerDependencies": null,
+      "dependencies": {
+        "glob": "^7.1.6",
+        "mem-fs": "^4.1.2",
+        "fs-extra": "^11.3.0",
+        "lodash-es": "^4.18.1",
+        "mem-fs-editor": "^11.1.4",
+        "fast-xml-parser": "^5.7.0",
+        "@inquirer/prompts": "^7.5.3"
+      },
+      "metadata_url": "https://registry.npmjs.org/@splunk/create/11.2.1",
+      "tarball": "https://registry.npmjs.org/@splunk/create/-/create-11.2.1.tgz",
+      "integrity": "sha512-rgDKaat57XFYNbNs3klWBsfLnlRNNo438QMylTKuec2KKIu4GpjZiwB/Ki+16LacwVOXsHW/6VZIDwKjNSCZRA=="
+    },
+    {
+      "name": "@splunk/splunk-utils",
+      "version": "3.4.0",
+      "author": {
+        "name": "Splunk Inc."
+      },
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": null,
+      "dependencies": {
+        "lodash": "^4.17.14",
+        "scriptjs": "^2.5.8",
+        "querystring": "^0.2.1",
+        "@splunk/ui-utils": "^1.12.0"
+      },
+      "metadata_url": "https://registry.npmjs.org/@splunk/splunk-utils/3.4.0",
+      "tarball": "https://registry.npmjs.org/@splunk/splunk-utils/-/splunk-utils-3.4.0.tgz",
+      "integrity": "sha512-RZDp9U+UCgS2A41zRBVvHvgMTYPsRxDv1BdKzKc78KH5xG3qwnpxwbYNoLhMhc9h0Wd+FTkL07qxj7TWbzxr2w=="
+    }
+  ]
+}

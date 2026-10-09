@@ -1,0 +1,58 @@
+* { box-sizing: border-box; }
+body { margin: 0; color: #303336; background: #f2f4f5; font: 14px Arial, sans-serif; }
+.splunk-header { background: #171d21; color: white; height: 56px; padding: 0 30px; display: flex; align-items: center; gap: 28px; }
+.splunk-header a { color: white; text-decoration: none; }
+.splunk-header a:last-child { margin-left: auto; font-size: 13px; }
+.splunk-brand { font-size: 26px; font-weight: bold; letter-spacing: -1px; }
+.clinic-workspace { max-width: 1500px; margin: auto; padding: 28px 32px; }
+.title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.title p { color: #667078; margin: 7px 0 0; }
+.workspace-toolbar, .toolbar, .panel-heading, .job-line { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.workspace-toolbar { background: white; border: 1px solid #d7dce0; border-radius: 3px; padding: 16px; }
+.workspace-toolbar label { display: block; font-size: 12px; margin-bottom: 5px; color: #55616a; }
+.workspace-toolbar .muted { flex: 1; }
+.notice, .frozen { font-size: 13px; line-height: 1.6; color: #55616a; }
+.frozen { background: #eaf3f8; border-left: 3px solid #1987b8; padding: 9px 12px; overflow-wrap: anywhere; }
+.panel, .comparison { background: white; border: 1px solid #d7dce0; border-radius: 3px; padding: 20px; margin-top: 18px; }
+.panel-heading { margin-bottom: 14px; }
+.panel-heading .toolbar { margin-left: auto; }
+.badge { display: inline-block; background: #e9f1f5; color: #24566c; border-radius: 3px; padding: 5px 9px; font-size: 12px; }
+.time-policy { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-size: 13px; }
+.job-line { margin-top: 15px; font-size: 13px; }
+.sid { color: #667078; font-family: monospace; overflow-wrap: anywhere; }
+.muted { color: #667078; font-size: 12px; line-height: 1.6; }
+.error { background: #fff3ef; color: #9e301b; padding: 12px; border-left: 3px solid #d6583e; line-height: 1.5; }
+.detail { border-top: 1px solid #dde2e5; margin-top: 15px; padding-top: 16px; }
+.table-scroll { overflow: auto; max-height: 420px; margin: 12px 0; }
+.comparison .toolbar { margin: 18px 0; }
+select, input:not([type=checkbox]) { padding: 7px 9px; border: 1px solid #aab4bc; border-radius: 3px; font: inherit; }
+input[aria-label="Comparison fields"] { width: 300px; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 400px; overflow: auto; background: #f3f5f6; padding: 15px; font-size: 12px; }
+footer { font-size: 12px; color: #667078; padding: 24px 0; }
+@media (max-width: 800px) { .clinic-workspace { padding: 16px; } .title { align-items: start; gap: 10px; } .panel-heading .toolbar { margin-left: 0; } .workspace-toolbar .muted { flex-basis: 100%; } }
+
+.toolbar-space { flex: 1; }
+.mode-policy { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px 16px; font-size: 13px; }
+.time-policy { display: inline-flex; }
+.execution-costs { margin-top: 24px; }
+
+.panel, .detail, .comparison { min-width: 0; max-width: 100%; }
+.panel-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.panel-controls .time-policy, .panel-controls .mode-policy { margin: 0; }
+.panel-heading { gap: 16px; }
+.table-scroll { min-width: 0; max-width: 100%; overscroll-behavior: contain; }
+.table-scroll table { table-layout: auto; width: max-content; min-width: 100%; }
+.cell-heading { display: inline-block; text-align: left; }
+.cell-value { white-space: pre-wrap; overflow-wrap: anywhere; min-width: 160px; }
+.raw-value { font-family: monospace; line-height: 1.5; }
+@media (max-width: 900px) { .panel-heading .toolbar { margin-left: 0; } }
+@media (max-width: 500px) {
+    .clinic-workspace { padding: 12px; }
+    .panel, .comparison { padding: 12px; }
+    .panel-controls { flex-basis: 100%; gap: 12px; }
+    .workspace-toolbar { padding: 12px; }
+    .comparison > [data-test="table"] { max-width: 100%; overflow: auto; }
+    input[aria-label="Comparison fields"] { width: min(280px, 100%); }
+}
+
+.cell-value { max-width: 100%; min-width: 0; }

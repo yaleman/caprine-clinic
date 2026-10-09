@@ -1,0 +1,60 @@
+# Investigation: supported building blocks
+
+> Current execution policy (user decision): Splunk alone governs SPL authorization, index access, concurrency quotas, runtime, job retention and permitted time ranges. Caprine Clinic imposes no command allowlist, panel count, concurrency cap, time-window cap or runtime budget. All selected searches are submitted together. Historical relative picker bounds share one server anchor; All Time, open endpoints and real-time expressions retain Splunk semantics. Inline SPL bounds/macros can override picker bounds, so matching picker intervals alone do not establish equivalent effective searches. Earlier proposed app restrictions below are superseded.
+
+
+Research performed on m2.local; exact UTC retrieval time is in the package evidence file. Only public documentation and public package source were accessed. “Verified” below means documentation/source verification, never runtime verification.
+
+## Public React packages
+
+| Package, observed version | Verified role | Design consequence |
+| --- | --- | --- |
+| `@splunk/react-ui` 5.17.0 | General Splunk UI components | Use buttons, tables, tabs, dropdowns, dialogs and messages; compose the comparison UI. It is not a complete Search & Reporting screen. |
+| `@splunk/react-search` 8.0.0 | `Bar` and `Input`; default SPL syntax; bar integrates time picker and submit button | Preferred editor. Test completion, multiline behavior, keyboard handling and data-dependent features in the actual app context. |
+| `@splunk/react-time-range` 12.1.1 | Separate time-range controls | Shared picker and per-panel overrides; preserve native relative-time expressions until dispatch preparation. |
+| `@splunk/search-job` 3.1.0 | Observable-based job creation, progress, results, previews, events and control methods | Viable lifecycle wrapper; isolate subscriptions and cleanup. |
+| `@splunk/splunk-utils` 4.1.0 | URL/fetch/context helpers, search utilities and time parser | Preferred small transport primitives if a direct adapter is clearer. |
+| `@splunk/create` 11.2.1 | Published scaffolding tool | Evaluate during implementation, rather than generating a monorepo in this design phase. |
+
+References: [UI](https://splunkui.splunk.com/Packages/react-ui/), [Search](https://splunkui.splunk.com/Packages/react-search/), [Time Range](https://splunkui.splunk.com/Packages/react-time-range/), [SearchJob](https://splunkui.splunk.com/Packages/search-job/). Exact metadata and source URLs are preserved in [package evidence](../research/package-evidence.json).
+
+Source findings from the published archives:
+
+- Search 8.0.0 `index.js` exports `Bar` and `Input`; `components/Bar.js` is also present. Its bundled Bar source accepts `options`, `onOptionsChange` and `onEventTrigger`. It changes `search`, `earliest`, `latest` and emits submit/escape events. It does not execute jobs itself. Its editor source includes Ace integration and completion helpers. Treat the provided default SPL syntax as supported; do not assume all native search-assistance services work without Splunk context.
+- Prefer the documented package root exports; do not import hashed internal chunks. A plain multiline Splunk UI text input is a fallback if the public Search component fails the compatibility spike. Such a fallback would lose editor assistance and needs explicit product acceptance. No separate `@splunk/react-syntax` package was found at the queried registry path; it is not a proposed dependency.
+- Search 8.0.0 and Create 11.2.1 require Node >=22. Search and UI peer ranges include React 18, not React 19; both require styled-components 5.3.10-compatible peers. Splunk-utils 4.1.0 requires Node >=20. Propose Node 22 for the build and React 18, with exact dependencies and a lockfile chosen after a build spike. Build-time Node requirements do not imply Node is required on the Splunk server.
+- SearchJob 3.1.0 depends on splunk-utils `^3.1.0` and RxJS `^5.4.2`. The currently resolving utils 3.4.0 source and utils 4.1.0 both route events/results/results_preview through v2 and use POST when a post-process `search` is supplied. Therefore do not incorrectly describe current SearchJob as necessarily v1-only. Pin and inspect the resolved dependency graph rather than forcing a major-version override.
+- SearchJob offers `create`, `getProgress`, `getResults`, `getResultsPreview`, `getEvents`, `cancel`, `stopKeepAlive` and controls. Source warns against cancelling cached/shared jobs. Each Clinic run should create an uncached private job. Unsubscribing stops consumers; it must not be treated as proof of server cancellation.
+- Utils `url.js` constructs locale/root-aware Splunk Web REST proxy URLs; `fetch.js` supplies credentials and `X-Splunk-Form-Key`. `timeParser.getISO(time)` accepts only a time expression and does not expose the frozen `now` parameter. Use a direct timeparser request for fair multi-panel resolution.
+
+## APIs and Job Inspector
+
+The [official search REST reference](https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-reference/10.4/search-endpoints/search-endpoint-descriptions) documents asynchronous job creation, status, controls, result/event/preview retrieval, parser, timeparser and search.log. Its semantic-version section distinguishes job creation/status paths from v2 result paths; do not insert `/v2` indiscriminately. Exact proposed mapping is in architecture.md.
+
+The [Job Inspector documentation](https://help.splunk.com/en/?resourceId=Splunk_Search_ViewsearchjobpropertieswiththeJobInspector) describes job properties and execution costs, with access dependent on artifact lifetime and ownership. It documents an inspector route resembling `manager/search/job_inspector?sid=...`, and links to search.log and a Job Details dashboard. Use a version-tested deep link as a convenience; there is no verified public reusable React Job Inspector component. Do not iframe the native inspector or scrape its HTML. The app can render a subset of returned properties plus a component-cost table, and offer the native inspector when available. Costs can overlap across phases/peers: adding them does not produce total wall-clock duration.
+
+Availability is conditional. Transforming searches can have final tabular results without the corresponding full raw event set. Preview availability depends on generation/settings and is not final evidence. Permission failures, expired artifacts and missing metrics are normal states. Logs and job properties can contain sensitive SPL, paths and data; fetch details on demand, render as text, and avoid durable raw exports by default.
+
+## SDK choice
+
+The [official JavaScript SDK source](https://github.com/splunk/splunk-sdk-javascript) and [search guide](https://dev.splunk.com/enterprise/docs/devtools/javascript/sdk-javascript/howtousesdkjavascript/howtosearchsdkjavascript) provide service/job methods. It is an alternative API client, not the modern React UI layer. Do not combine SDK, legacy SplunkJS MVC SearchManager and SearchJob to manage the same job. For this app, prefer Splunk Web session utilities plus one adapter. Validate exact wire paths even when a wrapper hides them. Do not copy credential-login examples into the browser app.
+
+## Packaging and deployment
+
+Plan a single Splunk app ID `caprine_clinic` (filesystem project remains `caprine-clinic`). The future package contains `default/app.conf`, `default/data/ui/nav/default.xml`, a supported view/template entry, `appserver/static` production assets and `metadata/default.meta`. The view-loading mechanism must be selected using the current scaffold and target Splunk release; do not assume arbitrary HTML dashboards are allowed on every Cloud stack. Source layout stays separate from the staged app archive. Bundle assets locally, exclude secrets, node_modules, development servers, `local/`, source caches and macOS metadata. No backend Python or custom REST handler is planned for MVP.
+
+Sources: [app structure tutorial](https://dev.splunk.com/enterprise/tutorials/module_getstarted/createapp), [app creation](https://dev.splunk.com/enterprise/docs/developapps/createapps), [build apps](https://dev.splunk.com/enterprise/docs/developapps/createapps/buildapps/), [AppInspect CLI](https://dev.splunk.com/enterprise/docs/developapps/testvalidate/appinspect/useappinspectclitool). Future packaging must pass current AppInspect and applicable Cloud checks; passing local checks is not a promise of Cloud acceptance. Search-head-cluster deployment, app installation authority, CSP and asset loading remain environment-specific gates. Do not use an old Create React App example as the current scaffold recommendation.
+
+## Permissions, session and resource controls
+
+Use the signed-in user's Splunk Web session, same-origin proxy, CSRF form key and explicit app/owner context. Do not store passwords, API tokens or session keys. Do not call management port 8089 directly from the browser. Root paths, locales, reverse proxies, SSO and session expiration need integration checks. Authorization remains server-enforced: app/view ACLs, search capability, accessible indexes, search filters, knowledge-object permissions, command capabilities and job ownership all matter. A search copied from another app can expand macros/lookups differently; display the dispatch app and use the same context across a batch.
+
+Sources: [capabilities](https://help.splunk.com/?resourceId=Platform_Security_table_of_splunk_platform_capabilities), published splunk-utils source, [authorize.conf](https://help.splunk.com/en/data-management/splunk-enterprise-admin-manual/10.4/configuration-file-reference/10.4.0-configuration-file-reference/authorize.conf), [cluster concurrency](https://help.splunk.com/en/splunk-enterprise/administer/distributed-search/10.6/manage-search-head-clustering/control-search-concurrency-on-search-head-clusters).
+
+There is no universal guaranteed concurrency allowance. User/role quotas, cumulative quotas, cluster capacity and admission/workload rules can reject or delay jobs. Reading visible quota settings does not reserve a slot. The app must tolerate denial without changing quotas or priorities.
+
+Arbitrary SPL can write or delete data, send messages, invoke custom commands or expand macros into such actions. Syntax validation is not a safety proof. [SPL safeguards](https://help.splunk.com/?resourceId=SplunkCloud_Security_SPLsafeguards), [risky commands](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.6/best-practices-for-splunk-platform-security/spl-safeguards-for-risky-commands/commands-that-trigger-spl-safeguards) and [REST post-process checks](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/10.6/best-practices-for-splunk-platform-security/spl-safeguards-for-risky-commands/run-post-process-searches-with-risky-commands-using-the-splunk-platform-rest-api) are server features with version-specific coverage. Never set `check_risky_command=false` automatically. A browser denylist is advisory, not a security boundary; accept arbitrary SPL and preserve native Splunk permissions/safeguards, as the user requested.
+
+## Version support proposal
+
+The user selected Splunk Enterprise 10.4 and a local standalone Docker instance following TA-pushover. Propose the verified 10.4.4 patch pinned by digest, with explicit linux/amd64 on ARM64 m2.local; emulation startup is still unverified. See [Docker testing](docker-testing.md) and [container evidence](../research/container-evidence.json). Start with this target and one supported browser, then test a nominated Cloud stack separately. Modern v2 search retrieval is the proposed baseline; do not enable deprecated endpoints to make the app work. Do not claim support for every 9.x/10.x deployment from package existence. Record exact Splunk version/build, browser, React/package graph, installed command providers, topology and CSP in the compatibility matrix. SPL1 historical searches only for MVP; SPL2 and real-time searches are excluded even where libraries expose them.

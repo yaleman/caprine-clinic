@@ -1,0 +1,3 @@
+<view template="caprine_clinic:/templates/clinic.html" type="html">
+  <label>Compare searches</label>
+</view>

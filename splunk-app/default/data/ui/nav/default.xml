@@ -1,0 +1,3 @@
+<nav search_view="clinic">
+  <view name="clinic" default="true" />
+</nav>

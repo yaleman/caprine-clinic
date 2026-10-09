@@ -1,0 +1,25 @@
+name: caprine-clinic-test
+services:
+  splunk:
+    image: splunk/splunk:10.4.4@sha256:4f18abfb106b29dc6af68868fb2e5c5ae68aa8e9ac6bfb28b7bec12ede2079aa
+    platform: linux/amd64
+    restart: "no"
+    cpus: 4
+    mem_limit: 8g
+    environment:
+      SPLUNK_START_ARGS: --accept-license
+      SPLUNK_GENERAL_TERMS: --accept-sgt-current-at-splunk-com
+      SPLUNK_PASSWORD: ${SPLUNK_PASSWORD:?Run scripts/local.py init first}
+      SPLUNK_APPS_URL: /tmp/caprine-clinic.spl,/tmp/clinic-test-fixtures.spl
+    ports:
+      - "127.0.0.1:18000:8000"
+      - "127.0.0.1:28089:8089"
+    volumes:
+      - ./caprine-clinic.spl:/tmp/caprine-clinic.spl:ro
+      - ./output/clinic-test-fixtures.spl:/tmp/clinic-test-fixtures.spl:ro
+      - ./tests/fixtures:/tmp/clinic-fixtures:ro
+      - splunk-etc:/opt/splunk/etc
+      - splunk-var:/opt/splunk/var
+volumes:
+  splunk-etc:
+  splunk-var:
