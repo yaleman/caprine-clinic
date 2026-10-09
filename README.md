@@ -1,44 +1,39 @@
 # Caprine Clinic
 
-Search diagnostics for the herd: a local Splunk app for editing multiple searches, running one or all, and comparing their observed performance and results.
+Search diagnostics for the herd. Run Splunk searches side by side, compare their performance, and see where their results differ—all inside Splunk Web.
 
-The local MVP is built and installed on Splunk Enterprise **10.4.4** on m2.local. Open [Caprine Clinic](http://127.0.0.1:18000/en-US/app/caprine_clinic/clinic). The isolated `clinic` login is stored in `.local/test-account.json` (mode 0600); credentials are excluded from packages.
+## Install and open
 
-Splunk configuration governs permissions, concurrency, runtime and time ranges. Clinic accepts arbitrary SPL, adds no search limits and submits Run all together. Relative historical time expressions use one server anchor; inline SPL bounds/macros and real-time windows require care when interpreting comparisons.
+Download the app archive from [GitHub Releases](https://github.com/yaleman/caprine-clinic/releases), then install it using **Apps → Manage Apps → Install app from file** in Splunk Web. Open **Caprine Clinic → Compare searches** from the Apps menu. You need permission to install apps, or an administrator to install it for you; searches use your signed-in Splunk account and its permissions.
 
-Build: `npm run build`. Check: `TSX_DISABLE_CACHE=1 npm run check`. Test harness: `just init`, `just up`, `just status`, `just smoke`. After rebuilding, `just deploy` copies Clinic assets into the existing test container and restarts Splunk Web. First boot installs the app and a separate synthetic-fixture app. Fixtures are timestamped once; use their absolute interval in `tests/fixtures/manifest.json` or All Time when exploring the twelve indexed fixture events. Default Last 15 minutes can exclude older fixtures.
+Caprine Clinic has been tested on Splunk Enterprise **10.4.4**. Other versions and Splunk Cloud have not been validated.
 
-See [current runtime verification and limitations](docs/runtime.md).
-## Packaging
+## Compare searches
 
-Use Node **26.10.0** (`.node-version`) and Python 3.9+. Run `npm ci --no-audit --no-fund`, then `npm run check`. The installable package is `dist/caprine_clinic-0.1.0.tar.gz`, with a SHA-256 checksum beside it. `caprine-clinic.spl` remains an identical local Compose alias. Generated packages, credentials, fixture data and runtime artifacts are ignored by Git.
+1. Enter your SPL in **Search A** and **Search B**. Use **Add search** for another panel, or **Duplicate** to try a variation of an existing search.
+2. Choose a **Shared time range** and **Search mode**. Each panel uses these settings by default. Uncheck **Use shared time range** or select a panel-specific mode to override them. Changing a panel's time picker while sharing is enabled changes the shared range.
+3. Click a panel's green search button to run it independently, or **Run all** to submit every panel together. Use **Cancel** or **Cancel all** to stop active jobs.
+4. Choose **Set baseline** on the search you want to compare against. **Compare final runs** shows runtime, result and event counts, scanned events, disk usage, and runtime change relative to the baseline when comparable.
+5. Open **Job details** for statistics, events, available previews, execution costs, and job properties/messages. Use the page controls to browse results.
 
-The GitHub workflow validates reproducibility and uploads the package/checksum. Successful main builds publish to the `v<package.json version>` GitHub Release, updating that version’s tag and assets on subsequent builds. Pull requests only build and validate. See [packaging conventions and validation](docs/packaging.md) for version bumps and remote setup.
+The initial example searches use the local development fixture index `caprine_clinic_test`. Replace them with searches for your own data after installing the app elsewhere.
 
-## Read the design
+## Compare result differences
 
-- [Research and package evidence](docs/research.md): verified public components, APIs, constraints and official references.
-- [Architecture and data model](docs/architecture.md): modules, typed state, transport mapping and ownership.
-- [Interaction design](docs/interactions.md): local text wireframes and execution flows.
-- [Comparison methodology](docs/comparison.md): frozen times, statistical interpretation and result differences.
-- [Implementation and test plan](docs/plan.md): MVP, safeguards, phases, acceptance criteria and user decisions.
-- [Local Docker testing](docs/docker-testing.md): TA-pushover conventions adapted for the selected Splunk Enterprise 10.4 target.
-- [Verification record](docs/verification.md): checks performed and validation still requiring a live instance.
-- [Package evidence](research/package-evidence.json): exact published versions, peer requirements and source archive integrity identifiers observed during research.
+Select a baseline and a **Candidate**, then click **Compare results** after both jobs complete. Leave **Fields** empty to compare all returned fields, or enter comma-separated field names to compare just those values.
 
-## Proposed direction
+Comparison ignores row order and counts duplicates: returning the same row twice differs from returning it once. The difference tables show rows found only in the baseline or candidate. The comparison label tells you whether all final rows were fetched; incomplete data cannot establish full equality. Large comparisons fetch results into your browser and can use substantial memory.
 
-Use React 18 and Splunk UI inside Splunk Web. The general `@splunk/react-ui` library supplies familiar controls; the separate `@splunk/react-search` package supplies a search bar, SPL input and time picker integration. Use a small job adapter around public Splunk utilities or SearchJob, keeping REST version choices explicit. Do not copy private Search & Reporting internals.
+## Read the timings
 
-“Run all” submits independent searches concurrently. It is an observed side-by-side comparison under shared load. A later repeated sequential mode supports more controlled benchmarking. Final results are compared separately from events and previews. Unavailable or truncated data must remain visibly unavailable or incomplete.
+**Run all** submits searches together, so they share Splunk resources. Runtime differences describe those runs; cache state, other workloads and search mode can affect them. A single run does not establish that one search is always faster. Missing job metrics appear as unavailable.
 
-## Official starting points
+Relative historical ranges are resolved against one Splunk server time anchor for each launch. Use the same interval and mode for a fair comparison. Searches run separately, real-time ranges, and time bounds or macros inside SPL may cover different data. Runtime percentages are shown only for completed runs from the same batch with matching resolved time bounds.
 
-- [Splunk UI packages](https://splunkui.splunk.com/Packages)
-- [React Search](https://splunkui.splunk.com/Packages/react-search/)
-- [SearchJob](https://splunkui.splunk.com/Packages/search-job/)
-- [Search REST reference, Enterprise 10.4](https://help.splunk.com/en/splunk-enterprise/leverage-rest-apis/rest-api-reference/10.4/search-endpoints/search-endpoint-descriptions)
-- [Search Job Inspector](https://help.splunk.com/en/?resourceId=Splunk_Search_ViewsearchjobpropertieswiththeJobInspector)
-- [Create a Splunk app](https://dev.splunk.com/enterprise/docs/developapps/createapps)
+## Jobs and workspace
 
-The local target runs the pinned linux/amd64 image under emulation on the ARM64 Mac. This establishes local functional compatibility; timings do not represent native or production performance. Source and packaging automation are maintained in the Git repository.
+Splunk governs search permissions, time ranges, runtime and concurrency. Caprine Clinic adds no execution limits. SPL runs with your account's capabilities, including commands that can write data.
+
+Editing a panel does not change its existing job; **Edited since run** marks changes made after submission. Cancel an active job before rerunning that panel. Refreshing or closing the page resets the workspace and does not cancel server jobs. Save searches you want to keep, and use Splunk's job management if you need to inspect jobs after leaving the page.
+
+If dispatch acknowledgement is lost, check your Splunk jobs before retrying: a job may already exist. Permission, quota and expired-job errors are reported from Splunk.
